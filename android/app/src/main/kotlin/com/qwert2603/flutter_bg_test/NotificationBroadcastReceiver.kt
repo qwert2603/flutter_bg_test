@@ -7,8 +7,6 @@ import androidx.core.app.NotificationManagerCompat
 
 class NotificationBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val pendingResult = goAsync()
-
         val channel = App.fgChannel ?: App.getOrCreateBgChannel(context)
 
         if (channel == null) {
@@ -21,6 +19,7 @@ class NotificationBroadcastReceiver : BroadcastReceiver() {
 
         NotificationManagerCompat.from(context).cancel(id)
 
+        val pendingResult = goAsync()
         App.onNotificationClickConsumed = {
             App.log("pendingResult.finish()")
             pendingResult.finish()
